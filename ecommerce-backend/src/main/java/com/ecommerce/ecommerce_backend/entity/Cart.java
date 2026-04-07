@@ -4,36 +4,33 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
-import jakarta.persistence.JoinColumn;
-import jakarta.persistence.ManyToOne;
 
 @Entity
-public class Product {
+public class Cart {
 	@Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    private String name;
-    private double price;
+    private Long userId;
+    private Long productId;
     private int quantity;
-    
 	public Long getId() {
 		return id;
 	}
 	public void setId(Long id) {
 		this.id = id;
 	}
-	public String getName() {
-		return name;
+	public Long getUserId() {
+		return userId;
 	}
-	public void setName(String name) {
-		this.name = name;
+	public void setUserId(Long userId) {
+		this.userId = userId;
 	}
-	public double getPrice() {
-		return price;
+	public Long getProductId() {
+		return productId;
 	}
-	public void setPrice(double price) {
-		this.price = price;
+	public void setProductId(Long productId) {
+		this.productId = productId;
 	}
 	public int getQuantity() {
 		return quantity;
@@ -41,9 +38,4 @@ public class Product {
 	public void setQuantity(int quantity) {
 		this.quantity = quantity;
 	}
-	
-    @ManyToOne
-    @JoinColumn(name = "category_id")
-    private Category category;
-    
 }

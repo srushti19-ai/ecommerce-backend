@@ -1,5 +1,7 @@
 package com.ecommerce.ecommerce_backend.entity;
 
+import java.util.Date;
+
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -18,6 +20,25 @@ public class User {
 	private String email;
 	private String password;
 	private String role;
+	
+	@Column(name = "reset_token")
+	private String resetToken;
+
+	@Column(name = "token_expiry")
+	private Date tokenExpiry;
+	
+	public String getResetToken() {
+		return resetToken;
+	}
+	public void setResetToken(String resetToken) {
+		this.resetToken = resetToken;
+	}
+	public Date getTokenExpiry() {
+		return tokenExpiry;
+	}
+	public void setTokenExpiry(Date tokenExpiry) {
+		this.tokenExpiry = tokenExpiry;
+	}
 	public long getId() {
 		return id;
 	}
