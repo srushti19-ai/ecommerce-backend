@@ -6,8 +6,11 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.ecommerce.ecommerce_backend.entity.Cart;
+import com.ecommerce.ecommerce_backend.entity.CartItem;
 import com.ecommerce.ecommerce_backend.entity.Order;
-import com.ecommerce.ecommerce_backend.repository.CartRepository;
+import com.ecommerce.ecommerce_backend.entity.Product;
+import com.ecommerce.ecommerce_backend.entity.User;
+import com.ecommerce.ecommerce_backend.repository.CartItemRepository;
 import com.ecommerce.ecommerce_backend.repository.OrderRepository;
 
 @Service
@@ -16,30 +19,67 @@ public class OrderService {
     private OrderRepository orderRepository;
 
     @Autowired
-    private CartRepository cartRepository;
+    private CartItemRepository cartItemRepository;
 
     // 🔥 PLACE ORDER (IMPORTANT)
+//    public String placeOrder() {
+//
+//        List<CartItem> cartItems = cartItemRepository.findAll();
+//
+//        for (CartItem item : cartItems) {
+//
+//            Order order = new Order();
+////            order.setUserId(item.getUserId());
+////            order.setProductId(item.getProductId());
+//            order.setUser(item.getCart().getUser());
+//            order.setProduct(item.getProduct());
+//            order.setQuantity(item.getQuantity());
+//            order.setStatus("ORDERED");
+//
+//            orderRepository.save(order);
+//        }
+//
+//        cartItemRepository.deleteAll(); // clear cart items after order
+//
+//        return "Order placed successfully";
+//    }
+    
     public String placeOrder() {
 
-        List<Cart> cartItems = cartRepository.findAll();
+        List<CartItem> cartItems = cartItemRepository.findAll();
 
-        for (Cart item : cartItems) {
+        double total = 0;
+
+        for (CartItem item : cartItems) {
 
             Order order = new Order();
-            order.setUserId(item.getUserId());
-            order.setProductId(item.getProductId());
+
+            // ✅ SET RELATIONS
+            order.setUser(item.getCart().getUser());
+            order.setProduct(item.getProduct());
             order.setQuantity(item.getQuantity());
-            order.setStatus("ORDERED");
+
+            // ✅ PRICE CALCULATION
+            double itemTotal = item.getProduct().getPrice() * item.getQuantity();
+            total += itemTotal;
+
+            order.setTotalPrice(itemTotal);
+
+            order.setStatus("ORDERED"); // (keep this from your old code)
 
             orderRepository.save(order);
         }
 
-        cartRepository.deleteAll(); // clear cart after order
+        // ✅ CLEAR CART AFTER ORDER
+        cartItemRepository.deleteAll();
 
-        return "Order placed successfully";
+        return "Order placed successfully. Total = " + total;
     }
 
     public List<Order> getOrders() {
         return orderRepository.findAll();
+    }
+    public List<Order> getUserOrders(Long userId) {
+        return orderRepository.findByUserId(userId);
     }
 }
