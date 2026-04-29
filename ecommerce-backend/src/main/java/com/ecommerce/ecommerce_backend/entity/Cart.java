@@ -13,7 +13,7 @@ public class Cart {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    private int quantity;
+    //private int quantity;
     @ManyToOne
     @JoinColumn(name = "user_id")
     private User user;
@@ -29,10 +29,10 @@ public class Cart {
 	public void setId(Long id) {
 		this.id = id;
 	}
-	public int getQuantity() {
-		return quantity;
-	}
-	public void setQuantity(int quantity) {
-		this.quantity = quantity;
-	}
+//	public int getQuantity() {
+//		return quantity;
+//	}
+//	public void setQuantity(int quantity) {
+//		this.quantity = quantity;
+//	}
 }

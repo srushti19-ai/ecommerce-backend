@@ -12,16 +12,19 @@ import com.ecommerce.ecommerce_backend.entity.Product;
 import com.ecommerce.ecommerce_backend.entity.User;
 import com.ecommerce.ecommerce_backend.repository.CartItemRepository;
 import com.ecommerce.ecommerce_backend.repository.OrderRepository;
+import com.ecommerce.ecommerce_backend.repository.UserRepository;
 
 @Service
 public class OrderService {
 	@Autowired
     private OrderRepository orderRepository;
+	
+	@Autowired
+    private UserRepository userRepository;
 
     @Autowired
     private CartItemRepository cartItemRepository;
 
-    // 🔥 PLACE ORDER (IMPORTANT)
 //    public String placeOrder() {
 //
 //        List<CartItem> cartItems = cartItemRepository.findAll();
@@ -54,32 +57,39 @@ public class OrderService {
 
             Order order = new Order();
 
-            // ✅ SET RELATIONS
+            // set relations
             order.setUser(item.getCart().getUser());
             order.setProduct(item.getProduct());
             order.setQuantity(item.getQuantity());
 
-            // ✅ PRICE CALCULATION
+            // price calculation
             double itemTotal = item.getProduct().getPrice() * item.getQuantity();
             total += itemTotal;
 
             order.setTotalPrice(itemTotal);
 
-            order.setStatus("ORDERED"); // (keep this from your old code)
+            order.setStatus("ORDERED"); 
 
             orderRepository.save(order);
         }
 
-        // ✅ CLEAR CART AFTER ORDER
         cartItemRepository.deleteAll();
 
         return "Order placed successfully. Total = " + total;
     }
+    
+    public List<Order> getOrdersByUser(Long userId) {
 
+        User user = userRepository.findById(userId)
+        		.orElseThrow(() -> new RuntimeException("User not found"));
+
+        return orderRepository.findByUser(user);
+    }
+    
     public List<Order> getOrders() {
         return orderRepository.findAll();
     }
-    public List<Order> getUserOrders(Long userId) {
-        return orderRepository.findByUserId(userId);
-    }
+//    public List<Order> getUserOrders(Long userId) {
+//        return orderRepository.findByUserId(userId);
+//    }
 }
