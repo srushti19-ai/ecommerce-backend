@@ -90,7 +90,7 @@ public class CartService {
         CartItem item = cartItemRepo.findById(cartItemId)
                 .orElseThrow(() -> new RuntimeException("Cart item not found"));
 
-        // update quantity
+        //Update quantity
         item.setQuantity(quantity);
 
         cartItemRepo.save(item);

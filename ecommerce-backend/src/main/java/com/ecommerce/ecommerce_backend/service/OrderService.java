@@ -57,12 +57,12 @@ public class OrderService {
 
             Order order = new Order();
 
-            // set relations
+            //Set relations
             order.setUser(item.getCart().getUser());
             order.setProduct(item.getProduct());
             order.setQuantity(item.getQuantity());
 
-            // price calculation
+            //Price calculation
             double itemTotal = item.getProduct().getPrice() * item.getQuantity();
             total += itemTotal;
 
