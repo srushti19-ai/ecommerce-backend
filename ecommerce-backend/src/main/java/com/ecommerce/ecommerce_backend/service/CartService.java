@@ -74,9 +74,9 @@ public class CartService {
 
         return "Added to cart";
     }
-//    public List<Cart> getCartItems() {
-//        return cartRepo.findAll();
-//    }
+    public List<Cart> getCartItems() {
+        return cartRepo.findAll();
+    }
     public List<CartItem> getCartByUser(Long userId) {
         return cartItemRepo.findByCartUserId(userId);
     }
@@ -90,7 +90,7 @@ public class CartService {
         CartItem item = cartItemRepo.findById(cartItemId)
                 .orElseThrow(() -> new RuntimeException("Cart item not found"));
 
-        // ✅ UPDATE QUANTITY
+        //  update quantity
         item.setQuantity(quantity);
 
         cartItemRepo.save(item);

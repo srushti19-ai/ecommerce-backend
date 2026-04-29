@@ -36,10 +36,10 @@ public class CartController {
         return cartService.addToCart(userId, productId, quantity);
     }
 
-//    @GetMapping
-//    public List<Cart> getCart() {
-//        return cartService.getCartItems();
-//    }
+    @GetMapping
+    public List<Cart> getCart() {
+        return cartService.getCartItems();
+    }
     
     @GetMapping("/{userId}")
     public List<CartItem> getCart(@PathVariable Long userId) {
