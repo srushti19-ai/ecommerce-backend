@@ -24,7 +24,22 @@ public class Order {
 	private Product product;
 	
 	private double totalPrice;
+	
+	private String paymentStatus;   // PENDING / PAID
+	private String paymentId;       // transaction id
 
+public String getPaymentStatus() {
+		return paymentStatus;
+	}
+	public void setPaymentStatus(String paymentStatus) {
+		this.paymentStatus = paymentStatus;
+	}
+	public String getPaymentId() {
+		return paymentId;
+	}
+	public void setPaymentId(String paymentId) {
+		this.paymentId = paymentId;
+	}
 public double getTotalPrice() {
 		return totalPrice;
 	}
