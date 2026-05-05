@@ -27,7 +27,8 @@ public class Order {
 	
 	private String paymentStatus;   // PENDING / PAID
 	private String paymentId;       // transaction id
-
+	//private String razorpayOrderId;
+	
 public String getPaymentStatus() {
 		return paymentStatus;
 	}
